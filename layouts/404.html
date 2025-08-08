@@ -1,0 +1,9 @@
+{{ define "main" }}
+  <article>
+    <h1>404 — Not found</h1>
+    <p class="meta">The file you requested doesn’t exist.</p>
+    <p>Try the <a href="{{ "/" | relURL }}">home page</a> or the nav above.</p>
+    <pre><code>user@{{ .Site.Title | urlize }}:~$ ls -la {{ .RelPermalink }}</code></pre>
+  </article>
+{{ end }}
+
