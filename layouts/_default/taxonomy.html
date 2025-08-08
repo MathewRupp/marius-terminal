@@ -1,0 +1,33 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  {{ $p := .Paginate .Pages }}
+  <ul class="postlist">
+    {{ range $p.Pages }}
+      <li>
+        {{/* Resolve hero with support for page bundles and subdirs */}}
+{{ $hero := "" }}
+{{ with .Params.hero }}
+  {{ $path := . }}
+  {{ with $.Resources.GetMatch $path }}
+    {{ $hero = .RelPermalink }}
+  {{ else }}
+    {{ $hero = $path | relURL }}
+  {{ end }}
+{{ else }}
+  {{ with .Resources.ByType "image" }}
+    {{ with (index . 0) }}{{ $hero = .RelPermalink }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ with $hero }}
+  <a class="thumb" href="{{ $.RelPermalink }}"><img class="hero" src="{{ . }}" alt=""></a>
+{{ end }}
+        <a class="title" href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <span class="date">{{ .Date.Format (.Site.Params.dateFormat | default "2 Jan '06") }}</span>
+        {{ with .Summary }}<p class="summary">{{ . | plainify }}</p>{{ end }}
+      </li>
+    {{ end }}
+  </ul>
+  <div class="pager">
+    {{ if $p.HasNext }}<a href="{{ $p.Next.URL }}">Older &rarr;</a>{{ end }}
+  </div>
+{{ end }}

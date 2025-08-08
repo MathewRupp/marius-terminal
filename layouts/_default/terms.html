@@ -1,0 +1,11 @@
+{{ define "main" }}
+  <h1>{{ .Title }}</h1>
+  <ul class="postlist">
+    {{ range .Data.Terms.Alphabetical }}
+      <li>
+        <a class="title" href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
+        <span class="date">{{ .Count }} items</span>
+      </li>
+    {{ end }}
+  </ul>
+{{ end }}

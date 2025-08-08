@@ -1,0 +1,12 @@
+{{ define "main" }}
+  <article>
+    {{ with .Params.hero }}
+      <figure class="post-hero"><img class="single-hero" src="{{ . | relURL }}" alt=""></figure>
+    {{ end }}
+    <h1>{{ .Title }}</h1>
+    {{ if not .Params.hideDate }}
+  <p class="meta">{{ .Date.Format (.Site.Params.dateFormat | default "2 Jan '06") }}</p>
+{{ end }}
+    <div class="content">{{ .Content }}</div>
+  </article>
+{{ end }}

@@ -1,0 +1,27 @@
+<a class="brand" href="{{ "/" | relURL }}">{{ .Site.Title }}<span class="caret">█</span></a>
+<button id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">☾</button>
+<nav class="main-nav">
+  <ul>
+    {{ $cur := . }}
+    {{ range .Site.Menus.main }}
+      {{ $active := or ($cur.IsMenuCurrent "main" .) ($cur.HasMenuCurrent "main" .) }}
+      <li><a href="{{ .URL | relURL }}" {{ if $active }}class="active"{{ end }}>{{ .Name }}</a></li>
+    {{ end }}
+  </ul>
+</nav>
+
+{{- $cmd := "ls" -}}
+{{- if .IsHome -}}
+  {{- $homeSection := or (index .Site.Params.homeSections 0) "journal" -}}
+  {{- $cmd = printf "ls -la %s" $homeSection -}}
+{{- else if eq .Kind "section" -}}
+  {{- $cmd = printf "ls -la %s" .Section -}}
+{{- else if eq .Kind "page" -}}
+  {{- with .File -}}
+    {{- $cmd = printf "less %s.md" .BaseFileName -}}
+  {{- else -}}
+    {{- $cmd = printf "less %s.md" (urlize .Title) -}}
+  {{- end -}}
+{{- end -}}
+
+<div class="promptline"><span class="user">user@{{ .Site.Title | urlize }}</span>:<span class="path">~</span>$ <span class="cmd">{{ $cmd }}</span><span class="cursor">▊</span></div>

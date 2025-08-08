@@ -1,0 +1,13 @@
+<script>
+  (function() {
+    const KEY = 'theme';
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const saved = localStorage.getItem(KEY) || (prefersDark ? 'dark' : 'light');
+    const root = document.documentElement;
+    const btn = document.getElementById('theme-toggle');
+    function apply(t){ root.setAttribute('data-theme', t); localStorage.setItem(KEY, t); if (btn) btn.textContent = (t === 'dark' ? '☾' : '☼'); }
+    apply(saved);
+    if (btn) btn.addEventListener('click', function(){ apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); });
+    document.addEventListener('keydown', function(e){ if (e.key.toLowerCase() === 't' && !e.metaKey && !e.ctrlKey && !e.altKey) { apply(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); } });
+  })();
+</script>
