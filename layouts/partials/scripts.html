@@ -1,3 +1,6 @@
+{{ $vimNav := resources.Get "js/vim-navigation.js" | minify | fingerprint }}
+<script src="{{ $vimNav.RelPermalink }}"></script>
+
 <script>
   (function() {
     const KEY = 'theme';
